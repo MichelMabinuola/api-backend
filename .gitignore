@@ -1,10 +1,9 @@
 # Python
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
-*.env
-*.log
+.env
+myv/
+venv/
+env/
 
 # Virtual environments
 myv/
