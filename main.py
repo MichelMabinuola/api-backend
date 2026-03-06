@@ -1,6 +1,3 @@
-why it doesn't remember when i say do you rememver last message?
-
-
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
@@ -117,4 +114,5 @@ async def chat(request: ChatRequest):
             "X-Accel-Buffering": "no",
         },
     )
+
 
