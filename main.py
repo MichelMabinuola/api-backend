@@ -12,6 +12,7 @@ from openai import AsyncOpenAI
 from read_kb import read_knowledge_base
 import os
 from dotenv import load_dotenv
+import uvicorn
 
 # -------------------- Logging --------------------
 logging.basicConfig(
@@ -114,9 +115,4 @@ async def chat(request: ChatRequest):
         },
     )
 
-
-# -------------------- Local Run --------------------
-
-if __name__ == "__main__":
-    import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8900)
