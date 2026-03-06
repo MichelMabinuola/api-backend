@@ -1,10 +1,4 @@
-# Knowledge Base — Michael Mabinuola
-
-Copyright© 2026 Michael Mabinuola
-
-This document provides structured context about Michael Mabinuola's professional background. It is designed to be embedded in an LLM system prompt so the model can give accurate, relevant advice about Michael's career, skills, and experience.
-
----
+# Michael Mabinuola — Professional Profile
 
 ## Identity
 
@@ -14,18 +8,13 @@ This document provides structured context about Michael Mabinuola's professional
 - **Title:** Database & AI Engineer
 - **Languages:** English (Native), Russian (Proficient), Korean (Intermediate)
 
----
-
 ## Professional Summary
 
-Michael is a Database and AI Engineer with four years experience. He builds scalable, high-performance data and AI systems. His core specializations include SingleStore internal optimization, vector database architecture, Kafka data pipelines, and RAG-based AI applications. He has hands-on experience running client PoCs (proofs of concept) and resolving complex performance issues across distributed OLTP/OLAP environments. He delivers practical, production-ready solutions that balance performance, scalability, and simplicity.
-
----
+Michael is a Database and AI Engineer with four years of experience. He builds scalable, high-performance data and AI systems. His core specializations include SingleStore internal optimization, vector database architecture, Kafka data pipelines, and RAG-based AI applications. He has hands-on experience running client PoCs (proofs of concept) and resolving complex performance issues across distributed OLTP/OLAP environments. He delivers practical, production-ready solutions that balance performance, scalability, and simplicity.
 
 ## Work Experience
 
 ### Database / AI Engineer — 에이플랫폼 (Agile Platform), Seoul
-
 **Dec 2023 – Present** | IT Services & Consulting (SingleStore-focused)
 
 - Leads online and offline database migrations.
@@ -38,7 +27,6 @@ Michael is a Database and AI Engineer with four years experience. He builds scal
 - Produces clear technical documentation for engineers and business stakeholders.
 
 ### Data Analyst / Engineer — 별따러가자 (Starpickers), Seoul
-
 **Sept 2021 – Nov 2023** | IT Telematics Company
 
 - Designed and implemented end-to-end ETL pipelines.
@@ -49,9 +37,7 @@ Michael is a Database and AI Engineer with four years experience. He builds scal
 - Contributed to a driving behavior scoring system for usage-based insurance (UBI).
 - Built an SVM model achieving 92% accuracy to classify road vs. sidewalk driving.
 - Developed and maintained KPI monitoring dashboards.
-
----
-
+  
 ## Skills
 
 ### Programming & APIs
@@ -74,8 +60,6 @@ Machine Learning, TensorFlow, LLMs, RAG, Semantic Search, Vector Databases, AI P
 
 ### Soft Skills
 Technical Writing, Strong Analytical & Problem-Solving Ability, Growth Mindset
-
----
 
 ## Education
 
@@ -100,36 +84,34 @@ Technical Writing, Strong Analytical & Problem-Solving Ability, Growth Mindset
 - Government of Korea Scholar (GKS), 2018
 - Nigeria/Russia Bilateral Scholarship, 2013
 
----
-
 ## Technical Writing
 
-Michael authors technical guides and tutorials on his Notion blog. Below is a summary of each article. For full details, code samples, and step-by-step walkthroughs, visit the linked pages.
+Michael authors technical guides and tutorials on his Notion blog.
 
 ### Text-to-SQL with LangChain
 **Link:** https://www.notion.so/Text-to-SQL-with-LangChain-2aad45e50c3281e59fc0c73328c1a658
-Demonstrates how to convert natural language queries into SQL executable on SingleStoreDB using OpenAI's ChatGPT API and LangChain. Covers database connection via SQLAlchemy, dynamic table selection with Pydantic extraction chains, dynamic few-shot example selection using semantic similarity (embeddings stored in SingleStore), ChatPromptTemplate construction, and a full query-generation-to-answer pipeline with conversation memory using LangChain's `create_sql_query_chain`, `QuerySQLDataBaseTool`, and `RunnablePassthrough`.
+Demonstrates how to convert natural language queries into SQL on SingleStoreDB using OpenAI and LangChain. Covers SQLAlchemy connections, dynamic table selection, few-shot example selection via embeddings, and a full query-to-answer pipeline with conversation memory.
 
 ### Vector DB Semantic Search (Tutorial)
 **Link:** https://www.notion.so/Vector-DB-Semantic-Search-Tutorial-2aad45e50c3281ad8845d00e05de7304
-A hands-on tutorial covering vector, fulltext, and hybrid search in SingleStore using 1.1M+ Korean Wikipedia embeddings (768 dimensions, Cohere model). Topics include KNN search (exact, no index), ANN search with vector indexes (IVF_FLAT, IVF_PQ, IVF_PQFS, HNSW_FLAT, HNSW_PQ), vector index caching behavior and memory management, Fulltext v2 search using MATCH and BM25 scoring, and hybrid search combining vector + fulltext scores. Includes performance benchmarks showing the impact of index caching on query latency.
+Hands-on tutorial covering vector, fulltext, and hybrid search in SingleStore using 1.1M+ Korean Wikipedia embeddings. Covers KNN, ANN vector indexes (IVF, HNSW), BM25 fulltext search, and hybrid search with performance benchmarks.
 
 ### Vector Index Concepts (ANN)
 **Link:** https://www.notion.so/Vector-Index-ANN-2bdd45e50c32802b9a72f535592e82fa
-An educational article explaining vector index internals in SingleStore. Covers IVF (Inverted File) with nlist/nprobe parameters and centroid-based partitioning, HNSW (Hierarchical Navigable Small World) with its multi-layer graph structure, Product Quantization (PQ) for vector compression and memory reduction, and SingleStore's on-disk columnstore LSM design for per-segment vector indexes with background merging.
+Educational article on vector index internals in SingleStore: IVF, HNSW, Product Quantization, and columnstore LSM design.
 
-### RAG — KNN + ANN + Hybrid Search with LangChain (User Guide)
+### RAG — KNN + ANN + Hybrid Search with LangChain
 **Link:** https://www.notion.so/RAG-KNN-ANN-Hybrid-Search-With-LangChain-User-Guide-with-Python-2aad45e50c3281fcb771d16bb6c39065
-A complete RAG demo with four retrieval approaches using SingleStore as the vector store: (1) LangChain RetrievalQA with ANN vector search, (2) RetrievalQA with `as_retriever()`, (3) pure SingleStore SQL for hybrid search, and (4) a custom LangChain retriever using SingleStore SQL for hybrid search. Uses Llama 2 (7B, GGUF quantized) as the local LLM. Includes setup instructions, config, and full output examples for each approach.
+Complete RAG demo with four retrieval approaches using SingleStore and Llama 2 (7B) as the local LLM.
 
 ### dbt + SingleStore Pipeline + Kafka CDC
 **Link:** https://www.notion.so/dbt-SingleStore-Pipeline-Kafka-CDC-2aad45e50c3281e98198d7bc44663c7a
-End-to-end guide for CDC (Change Data Capture) from MySQL to SingleStore using Debezium, Kafka, SingleStore Pipelines, and dbt. Covers MySQL binlog-based CDC via Debezium connector, Kafka topic creation and connector configuration, SingleStore Pipeline ingestion into a staging table, and dbt incremental models with `delete+insert` strategy to apply insert/update/delete events. Implements soft deletes using an `is_deleted` flag column instead of hard deletes.
+End-to-end CDC guide from MySQL to SingleStore using Debezium, Kafka, and dbt incremental models.
 
 ### Data Build Tool (dbt) + SingleStore DB
 **Link:** https://www.notion.so/Data-Build-Tool-dbt-SingleStore-DB-2bdd45e50c3280b094c9c0e38a6d7b65
-A setup and usage guide for dbt with SingleStore. Covers dbt-singlestore adapter installation and connection configuration, project initialization and debug verification, basic table materialization from JSON data, and incremental strategy (`delete+insert`) with timestamp-based change detection. Includes internal behavior analysis showing how dbt creates temporary tables, loads transformed data, and renames to the final target.
+Setup and usage guide for dbt with SingleStore, including incremental strategies and internal behavior analysis.
 
 ### Kafka Cluster Setup Guide
 **Link:** https://www.notion.so/Kafka-2bdd45e50c3280c7b763f5bfa9a70629
-A reference guide for setting up a single-node Kafka cluster. Covers Java runtime prerequisites, firewall configuration, Zookeeper and Kafka broker installation from the Apache archive, data/log directory configuration, and a comprehensive command reference for topic management, producer/consumer operations, and consumer group administration.
+Reference guide for setting up a single-node Kafka cluster with full command reference for topic and consumer management.
