@@ -69,9 +69,9 @@ async def stream_response(query: str,history: Optional[List[Message]] = None) ->
 
         messages.append({"role": "user", "content": query})
         stream = await client.chat.completions.create(
-            model="gpt-4o-mini",
+            model="gpt-5-mini",
             messages=messages,
-            temperature=0.3,
+            temperature=0.7,
             max_tokens=500,
             stream=True,
         )
@@ -117,3 +117,4 @@ async def chat(request: ChatRequest):
             "X-Accel-Buffering": "no",
         },
     )
+
