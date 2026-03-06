@@ -1,3 +1,6 @@
+why it doesn't remember when i say do you rememver last message?
+
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
@@ -61,14 +64,14 @@ async def stream_response(query: str,history: Optional[List[Message]] = None) ->
         messages = [{"role": "system", "content": FORMATTED_SYSTEM_PROMPT}]
 
         if history:
-            for msg in history[-10:]:  # Limit memory
+            for msg in history[-6:]:  # Limit memory
                 messages.append({"role": msg.role, "content": msg.content})
 
         messages.append({"role": "user", "content": query})
         stream = await client.chat.completions.create(
             model="gpt-4o-mini",
             messages=messages,
-            temperature=0.7,
+            temperature=0.3,
             max_tokens=500,
             stream=True,
         )
@@ -114,5 +117,3 @@ async def chat(request: ChatRequest):
             "X-Accel-Buffering": "no",
         },
     )
-
-    uvicorn.run(app, host="0.0.0.0", port=8900)
