@@ -14,7 +14,6 @@ import os
 from dotenv import load_dotenv
 import uvicorn
 
-
 # -------------------- Logging --------------------
 logging.basicConfig(
     level=logging.INFO,
@@ -23,23 +22,16 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-
 # -------------------- Environment --------------------
 load_dotenv(".env")
-
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-
-if not OPENAI_API_KEY:
-    raise RuntimeError("OPENAI_API_KEY not found in environment variables")
-
 client = AsyncOpenAI(api_key=OPENAI_API_KEY)
-
 
 # -------------------- Knowledge Base --------------------
 knowledge_base = read_knowledge_base()
+FORMATTED_SYSTEM_PROMPT = SYSTEM_PROMPT.format(context=knowledge_base)
 
 logger.info(f"Knowledge base loaded ({len(knowledge_base)} chars)")
-
 
 # -------------------- FastAPI App --------------------
 app = FastAPI(title="Michael's Portfolio AI Assistant")
@@ -51,7 +43,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 # -------------------- Models --------------------
 class Message(BaseModel):
@@ -65,71 +56,34 @@ class ChatRequest(BaseModel):
 
 
 # -------------------- Streaming LLM --------------------
-async def stream_response(
-    query: str,
-    history: Optional[List[Message]] = None
-) -> AsyncGenerator[str, None]:
-
+async def stream_response(query: str,history: Optional[List[Message]] = None) -> AsyncGenerator[str, None]:
     try:
+        messages = [{"role": "system", "content": FORMATTED_SYSTEM_PROMPT}]
 
-        messages = []
-
-        # System instruction
-        messages.append({
-            "role": "system",
-            "content": SYSTEM_PROMPT
-        })
-
-        # Knowledge base grounding
-        messages.append({
-            "role": "system",
-            "content": f"REFERENCE CONTEXT:\n{knowledge_base}"
-        })
-
-        # Conversation history
         if history:
-            for msg in history[-10:]:
-                messages.append({
-                    "role": msg.role,
-                    "content": msg.content
-                })
+            for msg in history[-6:]:  # Limit memory
+                messages.append({"role": msg.role, "content": msg.content})
 
-        # Current user query
-        messages.append({
-            "role": "user",
-            "content": query
-        })
-
-        logger.info(f"User query: {query}")
-
+        messages.append({"role": "user", "content": query})
         stream = await client.chat.completions.create(
             model="gpt-5-mini",
             messages=messages,
-            temperature=0.3,
+            temperature=0.7,
             max_tokens=500,
             stream=True,
         )
-
+        
         async for chunk in stream:
-
-            if not chunk.choices:
-                continue
-
-            delta = chunk.choices[0].delta
-
-            if delta and delta.content:
-                yield f"data: {delta.content}\n\n"
+            if chunk.choices:
+                delta = chunk.choices[0].delta
+                if delta and delta.content:
+                    yield f"data: {delta.content}\n\n"
 
         yield "data: [DONE]\n\n"
 
     except Exception as e:
-
         logger.error(f"Streaming error: {str(e)}")
-
-        error_data = json.dumps({
-            "error": "Something went wrong. Please try again."
-        })
-
+        error_data = json.dumps({"error": "Something went wrong. Please try again."})
         yield f"data: {error_data}\n\n"
         yield "data: [DONE]\n\n"
 
@@ -137,7 +91,6 @@ async def stream_response(
 # -------------------- Endpoints --------------------
 @app.get("/")
 async def root():
-
     return {
         "status": "online",
         "message": "Michael's Portfolio AI Assistant is running",
@@ -149,10 +102,8 @@ async def root():
 async def chat(request: ChatRequest):
 
     if not request.message.strip():
-        raise HTTPException(
-            status_code=400,
-            detail="Message cannot be empty"
-        )
+        raise HTTPException(status_code=400, detail="Message cannot be empty")
+
 
     return StreamingResponse(
         stream_response(request.message, request.history),
