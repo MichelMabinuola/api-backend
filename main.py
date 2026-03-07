@@ -69,7 +69,7 @@ async def stream_response(query: str,history: Optional[List[Message]] = None) ->
             model="gpt-5-mini",
             messages=messages,
             temperature=0.7,
-            max_tokens=500,
+            max_completion_tokens=500,
             stream=True,
         )
         
@@ -114,3 +114,4 @@ async def chat(request: ChatRequest):
             "X-Accel-Buffering": "no",
         },
     )
+
